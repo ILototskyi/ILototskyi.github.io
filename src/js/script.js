@@ -1,31 +1,24 @@
 "use strict";
 
-document.querySelector("button").onclick = myClick;
+  first("button").addEventListener("click", function() {
+    let val = first(".myInput").value.trim(); {
+    if (!val) { return; }
+  }
+    first(".textOutput").insertAdjacentHTML("beforeEnd", prepare(val));
+    first(".myInput").value = '';
+  });
+  
 
-function myClick() {
-    let a = document.querySelector(".myInput").value;
-    document.querySelector(".textOutput").innerHTML = prepare(a);
-    document.querySelector(".myInput").value = '';
-}
+  function prepare(text) {
+    return "<li>" + text.split(/\s+/).map(wrapSpan).join(" ") + "</li>";
 
-function prepare(text) {
-    return text
-      .split(' ')
-      .map(word => {
-        if(word.length === 0) {
-            return word;
-        }
-        let classes = [];
-
-        if(word.length > 3) {
-            classes.push('three-chr');
-        }
-
-        if(word.match(/[!@#$&*%]/)) {
-            classes.push('special-chr');
-        }
-    
-        classes = classes.join(' ');
-        return `<span class="${classes}">${word}</span>`;
-      }).join(' ');
+    function wrapSpan(word) {    
+      let color = /[!@#$&*%]/.test(word) ? "red" : word.length > 3 ? "green" : "";
+  
+      return `<span style="color: ${ color }">${ word }</span>`;
+    }
+  }
+  
+  function first(str) {
+    return document.querySelector(str);
   }
